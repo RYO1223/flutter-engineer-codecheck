@@ -131,6 +131,11 @@
 
 今回のアプリでは使用していないのでわかりません。
 
+## めちゃくちゃ参考にさせていただきました
+
+https://github.com/wasabeef/flutter-architecture-blueprints/tree/main
+
+https://github.com/susatthi/github-search/tree/develop
 
 以下オリジナルのまま
 
