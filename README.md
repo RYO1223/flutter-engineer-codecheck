@@ -40,6 +40,7 @@
 - ルーティング - [go_router]() & [go_router_builder]()
 - CI/CD - Github Actionsでテスト、ビルド、デプロイ対応
 - 横画面対応
+- ローディング中にshimmerを表示
 - iOS/Android/Web対応
 
 ### 対応できていないこと
