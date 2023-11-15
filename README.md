@@ -1,7 +1,6 @@
 # Github Repository Search
 
-![ezgif-4-16850e3b19](https://github.com/RYO1223/flutter-engineer-codecheck/assets/70420716/ace86cc2-b36b-4d0e-83c4-d3060a403e6a)
-
+![ezgif-4-6b45a5b309](https://github.com/RYO1223/flutter-engineer-codecheck/assets/70420716/2f30ad7b-ea59-4952-86e1-d1a82dcfc40d)
 
 ## ページ一覧
 
