@@ -11,8 +11,6 @@
 --|--
 ![IMG_7866003D1996-1](https://github.com/RYO1223/flutter-engineer-codecheck/assets/70420716/9d093a82-e7bc-466e-bc7e-3de0a28a5445) | ![8AD9232D-DB64-4277-B549-CF7EF0CBCB9C](https://github.com/RYO1223/flutter-engineer-codecheck/assets/70420716/1bceab93-ab56-4615-a2af-7f42b7dd0e35)
 
-
-
 ### 検索ページ
 
 通常(light)| 通常(dark) | 0件 | エラー
