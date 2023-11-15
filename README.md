@@ -55,6 +55,16 @@
 
 アーキテクチャのRepositoryと混同するのでGithubのリポジトリのことをRepoと呼びます
 
+## デバッグ方法
+
+1. v3.13.9のFlutter環境を用意する
+2. Githubで[fine-grained personal access tokenを取得する](https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#fine-grained-personal-access-token-1)
+3. `.env.sample`をコピーして`.env`にリネームし、GITHUB_TOKENに入れる。
+4. 起動
+   1. VSCodeの場合はデバッグタブからDebug devを押してください
+   2. それ以外の場合はターミナルから`flutter run --dart-define-from-file=dart_defines/dev.json`を実行してください
+
+
 ## アーキテクチャ詳細
 
 こちらには私の見解が含まれています。間違ったことを言っていれば指摘してください😄
