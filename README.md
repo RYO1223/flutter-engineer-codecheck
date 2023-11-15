@@ -39,6 +39,7 @@
   - [golden_test]()を使用したゴールデンテスト
 - ルーティング - [go_router]() & [go_router_builder]()
 - CI/CD - Github Actionsでテスト、ビルド、デプロイ対応
+- 横画面対応
 - iOS/Android/Web対応
 
 ### 対応できていないこと
@@ -47,7 +48,6 @@
 - [様々な環境でのゴールデンテスト](https://github.com/RYO1223/flutter-engineer-codecheck/issues/9)
 - [テストコードの共通化](https://github.com/RYO1223/flutter-engineer-codecheck/issues/2)
 - [アニメーションやリッチな表示](https://github.com/RYO1223/flutter-engineer-codecheck/issues/11)
-- [横画面対応](https://github.com/RYO1223/flutter-engineer-codecheck/issues/12)
 
 ## このアプリ特有の命名
 
