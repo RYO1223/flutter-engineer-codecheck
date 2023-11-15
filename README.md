@@ -49,6 +49,12 @@
 - [アニメーションやリッチな表示](https://github.com/RYO1223/flutter-engineer-codecheck/issues/11)
 - [横画面対応](https://github.com/RYO1223/flutter-engineer-codecheck/issues/12)
 
+## このアプリ特有の命名
+
+### Repo
+
+アーキテクチャのRepositoryと混同するのでGithubのリポジトリのことをRepoと呼びます
+
 ## アーキテクチャ詳細
 
 こちらには私の見解が含まれています。間違ったことを言っていれば指摘してください😄
