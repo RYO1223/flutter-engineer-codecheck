@@ -5,6 +5,7 @@ import 'package:flutter_engineer_codecheck/ui/app_router.dart';
 import 'package:flutter_engineer_codecheck/ui/profile_update/profile_update_view_model.dart';
 import 'package:flutter_engineer_codecheck/view_model/user/user_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class ProfileUpdatePage extends ConsumerStatefulWidget {
   const ProfileUpdatePage({super.key});
@@ -40,11 +41,18 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
         actions: [
           TextButton(
             onPressed: () async {
-              await viewModel.updateProfile();
-              if (!mounted) {
-                return;
+              try {
+                FocusManager.instance.primaryFocus?.unfocus();
+                context.loaderOverlay.show();
+
+                await viewModel.updateProfile();
+                if (!mounted) {
+                  return;
+                }
+                const HomeRoute().go(context);
+              } finally {
+                context.loaderOverlay.hide();
               }
-              const HomeRoute().go(context);
             },
             child: const Text('Save'),
           ),
