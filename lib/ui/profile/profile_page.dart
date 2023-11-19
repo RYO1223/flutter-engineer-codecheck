@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/ui/app_router.dart';
 import 'package:flutter_engineer_codecheck/view_model/user/user_view_model.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
@@ -23,19 +24,19 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Text(L10n.of(context)!.profile),
         actions: [
           TextButton(
             onPressed: () {
               const ProfileUpdateRoute().go(context);
             },
-            child: const Text('Edit'),
+            child: Text(L10n.of(context)!.edit),
           ),
         ],
       ),
       body: SafeArea(
         child: user == null
-            ? const Center(child: Text('Please sign in'))
+            ? Center(child: Text(L10n.of(context)!.pleaseSignIn))
             : Align(
                 alignment: Alignment.topCenter,
                 child: Column(
@@ -61,7 +62,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         userViewModel.signOut();
                         const InitialRoute().go(context);
                       },
-                      child: const Text('Sign Out'),
+                      child: Text(L10n.of(context)!.signOut),
                     ),
                   ],
                 ),

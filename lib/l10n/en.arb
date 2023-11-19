@@ -4,5 +4,12 @@
   "errorOccurred": "An error occurred.",
   "noReposFound": "No repositories found.\nTry changing the keyword.",
   "noMoreReposFound": "No more repositories found.",
-  "noReadmeFound": "No README found."
+  "noReadmeFound": "No README found.",
+  "profile": "Profile",
+  "editProfile": "Edit profile",
+  "edit": "Edit",
+  "save": "Save",
+  "signIn": "Sign In",
+  "signOut": "Sign Out",
+  "pleaseSignIn": "Please sign in."
 }

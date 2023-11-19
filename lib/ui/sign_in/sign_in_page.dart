@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/ui/app_router.dart';
 import 'package:flutter_engineer_codecheck/view_model/user/user_view_model.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
@@ -20,7 +21,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Sign In', style: Theme.of(context).textTheme.displayMedium),
+            Text(
+              L10n.of(context)!.signIn,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
             const SizedBox(height: 100),
             SizedBox(
               height: 400,

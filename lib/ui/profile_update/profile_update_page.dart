@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/ui/app_router.dart';
 import 'package:flutter_engineer_codecheck/ui/profile_update/profile_update_view_model.dart';
 import 'package:flutter_engineer_codecheck/view_model/user/user_view_model.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -37,11 +38,11 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title: Text(L10n.of(context)!.editProfile),
         actions: [
           TextButton(
             onPressed: () => _onSavePressed(viewModel),
-            child: const Text('Save'),
+            child: Text(L10n.of(context)!.save),
           ),
         ],
       ),
