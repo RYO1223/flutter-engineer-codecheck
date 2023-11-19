@@ -13,6 +13,7 @@ analyzer:
     # freezedの自動生成ファイルを除外する
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - "lib/firebase_options.dart"
   errors:
     # freezedのJsonKeyのエラーを無視する
     # ref: https://github.com/rrousselGit/freezed/issues/488
