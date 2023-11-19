@@ -87,6 +87,7 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
                   photoUrl,
                   height: imageDiameter,
                   width: imageDiameter,
+                  fit: BoxFit.cover,
                 )
               : Image.file(
                   File(photoUrl),
@@ -95,6 +96,7 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
                   fit: BoxFit.cover,
                 ),
         ),
+        const SizedBox(height: 16),
         InkWell(
           borderRadius: borderRadius,
           onTap: () {
@@ -107,9 +109,10 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
               borderRadius: borderRadius,
               color: Colors.black.withOpacity(0.3),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.camera_alt,
               size: 30,
+              color: Colors.white.withOpacity(0.8),
             ),
           ),
         ),
