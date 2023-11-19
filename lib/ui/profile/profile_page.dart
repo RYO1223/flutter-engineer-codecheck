@@ -58,8 +58,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
-                      onPressed: () {
-                        userViewModel.signOut();
+                      onPressed: () async {
+                        await userViewModel.signOut();
+                        if (!mounted) {
+                          return;
+                        }
                         const InitialRoute().go(context);
                       },
                       child: Text(L10n.of(context)!.signOut),
