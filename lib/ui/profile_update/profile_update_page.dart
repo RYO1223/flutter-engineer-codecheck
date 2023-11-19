@@ -40,20 +40,7 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
         title: const Text('Edit Profile'),
         actions: [
           TextButton(
-            onPressed: () async {
-              try {
-                FocusManager.instance.primaryFocus?.unfocus();
-                context.loaderOverlay.show();
-
-                await viewModel.updateProfile();
-                if (!mounted) {
-                  return;
-                }
-                const HomeRoute().go(context);
-              } finally {
-                context.loaderOverlay.hide();
-              }
-            },
+            onPressed: () => _onSavePressed(viewModel),
             child: const Text('Save'),
           ),
         ],
@@ -81,6 +68,21 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
         ),
       ),
     );
+  }
+
+  Future<void> _onSavePressed(ProfileUpdateViewModel viewModel) async {
+    try {
+      FocusManager.instance.primaryFocus?.unfocus();
+      context.loaderOverlay.show();
+
+      await viewModel.updateProfile();
+      if (!mounted) {
+        return;
+      }
+      const HomeRoute().go(context);
+    } finally {
+      context.loaderOverlay.hide();
+    }
   }
 
   Stack _userAvatar(String photoUrl, ProfileUpdateViewModel viewModel) {
