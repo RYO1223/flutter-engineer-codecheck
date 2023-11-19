@@ -63,6 +63,7 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
                     decoration: const InputDecoration(
                       labelText: 'Name',
                     ),
+                    initialValue: state.name,
                     onChanged: viewModel.updateDisplayName,
                   ),
                 ],
