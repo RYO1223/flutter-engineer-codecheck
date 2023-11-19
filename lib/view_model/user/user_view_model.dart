@@ -46,6 +46,10 @@ class UserViewModel extends _$UserViewModel {
     await _userRepository.signInWithGithub();
   }
 
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   Future<void> saveProfile({
     String? name,
     String? avatarUrl,

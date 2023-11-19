@@ -50,6 +50,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       user.name,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        userViewModel.signOut();
+                        const InitialRoute().go(context);
+                      },
+                      child: const Text('Sign Out'),
+                    ),
                   ],
                 ),
               ),
