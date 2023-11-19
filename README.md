@@ -1,7 +1,5 @@
 # Github Repository Search
 
-このコミット以降は無視してください
-
 ![ezgif-4-16850e3b19](https://github.com/RYO1223/flutter-engineer-codecheck/assets/70420716/ace86cc2-b36b-4d0e-83c4-d3060a403e6a)
 
 
@@ -22,6 +20,14 @@
 ### 詳細ページ
 
 <img src="https://github.com/RYO1223/flutter-engineer-codecheck/assets/70420716/99e7261e-ce9a-4185-9f56-b0238d129269" width="25%" />
+
+### プロフィールページ
+
+プロフィール | 編集
+--|--
+![FD8F2E16-3837-444E-97AD-F477BDDDA661](https://github.com/RYO1223/flutter-engineer-codecheck/assets/70420716/504236d3-b1af-4b77-806c-62bf4d71ea4d)|![E8F864B4-866F-4021-8F00-92BA7AAAFE35](https://github.com/RYO1223/flutter-engineer-codecheck/assets/70420716/c97def2d-4c77-478b-9ec4-df3602166624)
+
+
 
 ## 技術スタック
 
