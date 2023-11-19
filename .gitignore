@@ -51,3 +51,5 @@ app.*.map.json
 **/failures/*.png
 
 ios/build/.last_build_id
+
+.fvm/flutter_sdk

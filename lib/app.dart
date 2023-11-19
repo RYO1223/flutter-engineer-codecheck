@@ -3,6 +3,7 @@ import 'package:flutter_engineer_codecheck/ui/app_router.dart';
 import 'package:flutter_engineer_codecheck/ui/theme/app_theme.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class App extends ConsumerWidget {
   const App({
@@ -26,6 +27,22 @@ class App extends ConsumerWidget {
         theme: appTheme.light(),
         darkTheme: appTheme.dark(),
         routerConfig: appRouter,
+        builder: (context, child) {
+          // 全画面ローディング用のラッパーウィジェット
+          return GlobalLoaderOverlay(
+            useDefaultLoading: false,
+            overlayWidgetBuilder: (_) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+            child: GestureDetector(
+              // キーボード外をタップしたらキーボードを閉じる
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+              child: child,
+            ),
+          );
+        },
       );
     } else {
       // テスト用MaterialApp

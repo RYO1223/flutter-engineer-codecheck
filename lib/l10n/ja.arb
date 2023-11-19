@@ -4,5 +4,12 @@
   "errorOccurred": "エラーが発生しました",
   "noReposFound": "リポジトリが見つからないよ\nキーワードを変えてみてね",
   "noMoreReposFound": "これ以上リポジトリがありません",
-  "noReadmeFound": "READMEが見つかりませんでした"
+  "noReadmeFound": "READMEが見つかりませんでした",
+  "profile": "プロフィール",
+  "editProfile": "プロフィールを編集",
+  "edit": "編集",
+  "save": "保存",
+  "signIn": "サインイン",
+  "signOut": "サインアウト",
+  "pleaseSignIn": "サインインしてください"
 }

@@ -1,0 +1,135 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/ui/app_router.dart';
+import 'package:flutter_engineer_codecheck/ui/profile_update/profile_update_view_model.dart';
+import 'package:flutter_engineer_codecheck/view_model/user/user_view_model.dart';
+import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+
+class ProfileUpdatePage extends ConsumerStatefulWidget {
+  const ProfileUpdatePage({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ProfileUpdatePageState();
+}
+
+class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
+  @override
+  void initState() {
+    final user = ref.read(userViewModelProvider);
+    // 更新するユーザーがいない時はホームに戻す
+    // そのため、この画面ではuser!にしてもよい
+    if (user == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        const HomeRoute().go(context);
+      });
+    }
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = ref.read(profileUpdateViewModelProvider.notifier);
+    final state = ref.watch(profileUpdateViewModelProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(L10n.of(context)!.editProfile),
+        actions: [
+          TextButton(
+            onPressed: () => _onSavePressed(viewModel),
+            child: Text(L10n.of(context)!.save),
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                children: [
+                  _userAvatar(state.avatarUrl, viewModel),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Name',
+                    ),
+                    initialValue: state.name,
+                    onChanged: viewModel.updateDisplayName,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _onSavePressed(ProfileUpdateViewModel viewModel) async {
+    try {
+      FocusManager.instance.primaryFocus?.unfocus();
+      context.loaderOverlay.show();
+
+      await viewModel.updateProfile();
+      if (!mounted) {
+        return;
+      }
+      const HomeRoute().go(context);
+    } finally {
+      context.loaderOverlay.hide();
+    }
+  }
+
+  Stack _userAvatar(String photoUrl, ProfileUpdateViewModel viewModel) {
+    const imageDiameter = 100.0;
+    final borderRadius = BorderRadius.circular(imageDiameter / 2);
+
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(100),
+          child: photoUrl.startsWith('http')
+              ? Image(
+                  image: CachedNetworkImageProvider(photoUrl),
+                  height: imageDiameter,
+                  width: imageDiameter,
+                  fit: BoxFit.cover,
+                )
+              : Image.file(
+                  File(photoUrl),
+                  height: imageDiameter,
+                  width: imageDiameter,
+                  fit: BoxFit.cover,
+                ),
+        ),
+        const SizedBox(height: 16),
+        InkWell(
+          borderRadius: borderRadius,
+          onTap: () {
+            viewModel.pickImageFromGallery();
+          },
+          child: Container(
+            height: imageDiameter,
+            width: imageDiameter,
+            decoration: BoxDecoration(
+              borderRadius: borderRadius,
+              color: Colors.black.withOpacity(0.3),
+            ),
+            child: Icon(
+              Icons.camera_alt,
+              size: 30,
+              color: Colors.white.withOpacity(0.8),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
