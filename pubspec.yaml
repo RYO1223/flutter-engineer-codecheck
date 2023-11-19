@@ -58,6 +58,7 @@ dependencies:
   image_picker: ^1.0.4
   sign_in_button: ^3.2.0
   loader_overlay: ^3.0.0
+  cached_network_image: ^3.3.0
 
 dev_dependencies:
   flutter_test:

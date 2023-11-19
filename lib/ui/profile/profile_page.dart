@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/ui/app_router.dart';
 import 'package:flutter_engineer_codecheck/view_model/user/user_view_model.dart';
@@ -44,8 +45,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     const SizedBox(height: 16),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: Image.network(
-                        user.avatarUrl,
+                      child: Image(
+                        // 自分のプロフィールはよく参照するのでキャッシュする
+                        image: CachedNetworkImageProvider(
+                          user.avatarUrl,
+                        ),
                         height: 100,
                         width: 100,
                         fit: BoxFit.cover,

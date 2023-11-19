@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/ui/app_router.dart';
 import 'package:flutter_engineer_codecheck/ui/profile_update/profile_update_view_model.dart';
@@ -95,8 +96,8 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
         ClipRRect(
           borderRadius: BorderRadius.circular(100),
           child: photoUrl.startsWith('http')
-              ? Image.network(
-                  photoUrl,
+              ? Image(
+                  image: CachedNetworkImageProvider(photoUrl),
                   height: imageDiameter,
                   width: imageDiameter,
                   fit: BoxFit.cover,
