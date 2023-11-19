@@ -56,8 +56,14 @@ dependencies:
 
   # 画像選択
   image_picker: ^1.0.4
+
+  # SignInWith系のボタン
   sign_in_button: ^3.2.0
+
+  # 全画面ローディング
   loader_overlay: ^3.0.0
+
+  # 画像キャッシュ
   cached_network_image: ^3.3.0
 
 dev_dependencies:
