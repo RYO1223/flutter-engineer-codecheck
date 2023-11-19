@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/ui/app_router.dart';
 import 'package:flutter_engineer_codecheck/view_model/user/user_view_model.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
@@ -51,11 +53,23 @@ class _SignInPageState extends ConsumerState<SignInPage> {
         borderRadius: BorderRadius.all(Radius.circular(100)),
       ),
       onPressed: () async {
-        await userViewModel.signInWithGithub();
-        if (!mounted) {
-          return;
+        try {
+          context.loaderOverlay.show();
+
+          await userViewModel.signInWithGithub();
+          if (!mounted) {
+            return;
+          }
+          const HomeRoute().go(context);
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'web-context-cancelled') {
+            debugPrint(e.toString());
+            return;
+          }
+          rethrow;
+        } finally {
+          context.loaderOverlay.hide();
         }
-        const HomeRoute().go(context);
       },
     );
   }
