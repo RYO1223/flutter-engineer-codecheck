@@ -33,6 +33,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // signInWith系のボタンは形が明確に指定されていることがあるので、
+                  // 公式サイトの要件をしっかり確認すること
                   _githubButton(context, userViewModel),
                 ],
               ),
