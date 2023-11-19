@@ -28,6 +28,7 @@ class App extends ConsumerWidget {
         darkTheme: appTheme.dark(),
         routerConfig: appRouter,
         builder: (context, child) {
+          // 全画面ローディング用のラッパーウィジェット
           return GlobalLoaderOverlay(
             useDefaultLoading: false,
             overlayWidgetBuilder: (_) {
@@ -36,6 +37,7 @@ class App extends ConsumerWidget {
               );
             },
             child: GestureDetector(
+              // キーボード外をタップしたらキーボードを閉じる
               onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
               child: child,
             ),
