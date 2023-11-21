@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'github_repository_impl.g.dart';
 
 @riverpod
-GithubRepositoryImpl githubRepository(GithubRepositoryRef ref) {
+GithubRepository githubRepository(GithubRepositoryRef ref) {
   return GithubRepositoryImpl(ref);
 }
 

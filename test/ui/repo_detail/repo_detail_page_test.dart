@@ -1,5 +1,5 @@
 import 'package:flutter_engineer_codecheck/app.dart';
-import 'package:flutter_engineer_codecheck/data/repository/github_repository_impl.dart';
+import 'package:flutter_engineer_codecheck/data/repository/github_repository.dart';
 import 'package:flutter_engineer_codecheck/ui/repo_detail/repo_detail_page.dart';
 import 'package:flutter_engineer_codecheck/view_model/repos/repos_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,14 +12,14 @@ import '../../data/dummy/dummy_fetch_repo_content_result.dart';
 import '../../data/dummy/dummy_repo.dart';
 import '../../data/dummy/dummy_search_repos_result.dart';
 
-class MockGithubRepositoryImpl extends Mock implements GithubRepositoryImpl {}
+class MockGithubRepository extends Mock implements GithubRepository {}
 
 void main() {
-  late MockGithubRepositoryImpl repository;
+  late MockGithubRepository repository;
   late List<Device> devices;
 
   setUp(() async {
-    repository = MockGithubRepositoryImpl();
+    repository = MockGithubRepository();
     when(
       () => repository.searchRepos(
         any(),

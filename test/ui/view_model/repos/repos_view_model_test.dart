@@ -2,6 +2,7 @@
 // ignore_for_file: no_default_cases
 import 'package:flutter_engineer_codecheck/data/app_exception.dart';
 import 'package:flutter_engineer_codecheck/data/model/search_repos_result.dart';
+import 'package:flutter_engineer_codecheck/data/repository/github_repository.dart';
 import 'package:flutter_engineer_codecheck/data/repository/github_repository_impl.dart';
 import 'package:flutter_engineer_codecheck/view_model/repos/repos_view_model.dart';
 import 'package:flutter_engineer_codecheck/view_model/repos/repos_view_model_state.dart';
@@ -13,17 +14,17 @@ import '../../../data/dummy/dummy_fetch_repo_content_result.dart';
 import '../../../data/dummy/dummy_search_repos_result.dart';
 import '../../../test_util/riverpod.dart';
 
-class MockGithubRepositoryImpl extends Mock implements GithubRepositoryImpl {}
+class MockGithubRepository extends Mock implements GithubRepository {}
 
 // ここでは、ViewModelの状態遷移のみをテストしている
 // 引数のテストは、UI側で行う
 void main() {
-  late MockGithubRepositoryImpl repository;
+  late MockGithubRepository repository;
   late ProviderContainer container;
   late ReposViewModel viewModel;
 
   setUp(() {
-    repository = MockGithubRepositoryImpl();
+    repository = MockGithubRepository();
     container = createContainer(
       overrides: [
         githubRepositoryProvider.overrideWithValue(repository),
