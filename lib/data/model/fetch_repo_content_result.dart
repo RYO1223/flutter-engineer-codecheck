@@ -25,7 +25,8 @@ class FetchRepoContentResult with _$FetchRepoContentResult {
   factory FetchRepoContentResult.fromJson(Map<String, Object?> json) =>
       _$FetchRepoContentResultFromJson(json);
 
-  String _decodedContent() {
+  @visibleForTesting
+  String decodedContent() {
     if (encoding == Encoding.base64.name) {
       // github api は自動的に改行コードを含むので、base64Decode する前に改行コードを削除する
       // この改行コードは元ファイルに含まれていないものなので安全に消せる
@@ -41,7 +42,7 @@ class FetchRepoContentResult with _$FetchRepoContentResult {
     return RepoContent(
       path: path,
       name: name,
-      content: _decodedContent(),
+      content: decodedContent(),
     );
   }
 }
