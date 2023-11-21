@@ -40,8 +40,6 @@ mixin _$Repo {
   int get openIssuesCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'language')
   String? get language => throw _privateConstructorUsedError;
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  AsyncValue<String> get readmeText => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -65,9 +63,7 @@ abstract class $RepoCopyWith<$Res> {
       @JsonKey(name: 'watchers_count') int watchersCount,
       @JsonKey(name: 'forks_count') int forksCount,
       @JsonKey(name: 'open_issues_count') int openIssuesCount,
-      @JsonKey(name: 'language') String? language,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      AsyncValue<String> readmeText});
+      @JsonKey(name: 'language') String? language});
 
   $OwnerCopyWith<$Res> get owner;
 }
@@ -97,7 +93,6 @@ class _$RepoCopyWithImpl<$Res, $Val extends Repo>
     Object? forksCount = null,
     Object? openIssuesCount = null,
     Object? language = freezed,
-    Object? readmeText = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -148,10 +143,6 @@ class _$RepoCopyWithImpl<$Res, $Val extends Repo>
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as String?,
-      readmeText: null == readmeText
-          ? _value.readmeText
-          : readmeText // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<String>,
     ) as $Val);
   }
 
@@ -183,9 +174,7 @@ abstract class _$$RepoImplCopyWith<$Res> implements $RepoCopyWith<$Res> {
       @JsonKey(name: 'watchers_count') int watchersCount,
       @JsonKey(name: 'forks_count') int forksCount,
       @JsonKey(name: 'open_issues_count') int openIssuesCount,
-      @JsonKey(name: 'language') String? language,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      AsyncValue<String> readmeText});
+      @JsonKey(name: 'language') String? language});
 
   @override
   $OwnerCopyWith<$Res> get owner;
@@ -213,7 +202,6 @@ class __$$RepoImplCopyWithImpl<$Res>
     Object? forksCount = null,
     Object? openIssuesCount = null,
     Object? language = freezed,
-    Object? readmeText = null,
   }) {
     return _then(_$RepoImpl(
       id: null == id
@@ -264,10 +252,6 @@ class __$$RepoImplCopyWithImpl<$Res>
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as String?,
-      readmeText: null == readmeText
-          ? _value.readmeText
-          : readmeText // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<String>,
     ));
   }
 }
@@ -287,9 +271,7 @@ class _$RepoImpl extends _Repo {
       @JsonKey(name: 'watchers_count') required this.watchersCount,
       @JsonKey(name: 'forks_count') required this.forksCount,
       @JsonKey(name: 'open_issues_count') required this.openIssuesCount,
-      @JsonKey(name: 'language') required this.language,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      this.readmeText = const AsyncLoading<String>()})
+      @JsonKey(name: 'language') required this.language})
       : super._();
 
   factory _$RepoImpl.fromJson(Map<String, dynamic> json) =>
@@ -327,13 +309,10 @@ class _$RepoImpl extends _Repo {
   @override
   @JsonKey(name: 'language')
   final String? language;
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  final AsyncValue<String> readmeText;
 
   @override
   String toString() {
-    return 'Repo(id: $id, name: $name, fullName: $fullName, owner: $owner, htmlUrl: $htmlUrl, description: $description, updatedAt: $updatedAt, stargazersCount: $stargazersCount, watchersCount: $watchersCount, forksCount: $forksCount, openIssuesCount: $openIssuesCount, language: $language, readmeText: $readmeText)';
+    return 'Repo(id: $id, name: $name, fullName: $fullName, owner: $owner, htmlUrl: $htmlUrl, description: $description, updatedAt: $updatedAt, stargazersCount: $stargazersCount, watchersCount: $watchersCount, forksCount: $forksCount, openIssuesCount: $openIssuesCount, language: $language)';
   }
 
   @override
@@ -360,9 +339,7 @@ class _$RepoImpl extends _Repo {
             (identical(other.openIssuesCount, openIssuesCount) ||
                 other.openIssuesCount == openIssuesCount) &&
             (identical(other.language, language) ||
-                other.language == language) &&
-            (identical(other.readmeText, readmeText) ||
-                other.readmeText == readmeText));
+                other.language == language));
   }
 
   @JsonKey(ignore: true)
@@ -380,8 +357,7 @@ class _$RepoImpl extends _Repo {
       watchersCount,
       forksCount,
       openIssuesCount,
-      language,
-      readmeText);
+      language);
 
   @JsonKey(ignore: true)
   @override
@@ -410,9 +386,7 @@ abstract class _Repo extends Repo {
       @JsonKey(name: 'watchers_count') required final int watchersCount,
       @JsonKey(name: 'forks_count') required final int forksCount,
       @JsonKey(name: 'open_issues_count') required final int openIssuesCount,
-      @JsonKey(name: 'language') required final String? language,
-      @JsonKey(includeFromJson: false, includeToJson: false)
-      final AsyncValue<String> readmeText}) = _$RepoImpl;
+      @JsonKey(name: 'language') required final String? language}) = _$RepoImpl;
   _Repo._() : super._();
 
   factory _Repo.fromJson(Map<String, dynamic> json) = _$RepoImpl.fromJson;
@@ -449,9 +423,6 @@ abstract class _Repo extends Repo {
   @override
   @JsonKey(name: 'language')
   String? get language;
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  AsyncValue<String> get readmeText;
   @override
   @JsonKey(ignore: true)
   _$$RepoImplCopyWith<_$RepoImpl> get copyWith =>

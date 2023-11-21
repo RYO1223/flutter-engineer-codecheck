@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_engineer_codecheck/data/app_exception.dart';
+import 'package:flutter_engineer_codecheck/data/model/repo_content.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'fetch_repo_content_result.freezed.dart';
@@ -13,6 +14,7 @@ enum Encoding {
 @freezed
 class FetchRepoContentResult with _$FetchRepoContentResult {
   const factory FetchRepoContentResult({
+    required String path,
     required String encoding,
     required String name,
     required String content,
@@ -23,7 +25,7 @@ class FetchRepoContentResult with _$FetchRepoContentResult {
   factory FetchRepoContentResult.fromJson(Map<String, Object?> json) =>
       _$FetchRepoContentResultFromJson(json);
 
-  String decodedContent() {
+  String _decodedContent() {
     if (encoding == Encoding.base64.name) {
       // github api は自動的に改行コードを含むので、base64Decode する前に改行コードを削除する
       // この改行コードは元ファイルに含まれていないものなので安全に消せる
@@ -33,5 +35,13 @@ class FetchRepoContentResult with _$FetchRepoContentResult {
       );
     }
     throw AppException(Exception('Unknown encoding: $encoding'));
+  }
+
+  RepoContent toRepoContent() {
+    return RepoContent(
+      path: path,
+      name: name,
+      content: _decodedContent(),
+    );
   }
 }

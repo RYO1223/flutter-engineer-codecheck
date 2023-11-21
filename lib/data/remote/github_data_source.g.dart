@@ -60,7 +60,8 @@ class _GithubDataSource implements GithubDataSource {
 
   @override
   Future<RetrofitObject> getRepoContent(
-    String fullName,
+    String owner,
+    String repo,
     String path,
   ) async {
     const _extra = <String, dynamic>{};
@@ -75,7 +76,7 @@ class _GithubDataSource implements GithubDataSource {
     )
             .compose(
               _dio.options,
-              '/repos/${fullName}/contents/${path}',
+              '/repos/${owner}/${repo}/contents/${path}',
               queryParameters: queryParameters,
               data: _data,
             )

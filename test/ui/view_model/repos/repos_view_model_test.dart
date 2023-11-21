@@ -10,7 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../data/dummy/dummy_fetch_repo_content_result.dart';
 import '../../../data/dummy/dummy_search_repos_result.dart';
 import '../../../test_util/riverpod.dart';
 
@@ -66,17 +65,6 @@ void main() {
   void mockSearchReposError() {
     whenMockSearchReposAny().thenThrow(
       AppException(Exception('error')),
-    );
-  }
-
-  void mockFetchRepoContentSuccess() {
-    when(
-      () => repository.fetchRepoContent(
-        any(),
-        any(),
-      ),
-    ).thenAnswer(
-      (_) => Future.value(dummyFetchRepoContentResult),
     );
   }
 
@@ -288,21 +276,6 @@ void main() {
       expect(state.status, ReposViewModelStatus.contentAvailableWithError);
       expect(state.repos.length, 10);
       expect(state.error, isA<AppException>());
-    });
-    test('READMEを取得', () async {
-      // 初回クエリ
-      mockSearchReposSuccess();
-      await viewModel.searchRepos('test');
-
-      final subscription = container.listen(repoProvider(1), (_, __) {});
-
-      expect(subscription.read().readmeText, isA<AsyncLoading<String>>());
-
-      // README取得
-      mockFetchRepoContentSuccess();
-      await viewModel.fetchRepoReadme(1);
-
-      expect(subscription.read().readmeText.value, 'hogehogehugahuga');
     });
   });
 }

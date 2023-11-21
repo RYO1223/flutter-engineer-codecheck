@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/data/model/repo.dart';
 import 'package:flutter_engineer_codecheck/ui/component/repo_label.dart';
 import 'package:flutter_engineer_codecheck/ui/component/repo_language_label.dart';
+import 'package:flutter_engineer_codecheck/view_model/repo_content/repo_content_view_model.dart';
 import 'package:flutter_engineer_codecheck/view_model/repos/repos_view_model.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -21,14 +22,10 @@ class RepoDetailPage extends ConsumerStatefulWidget {
 
 class _RepoDetailPageState extends ConsumerState<RepoDetailPage> {
   @override
-  void initState() {
-    ref.read(reposViewModelProvider.notifier).fetchRepoReadme(widget.repoId);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final repo = ref.watch(repoProvider(widget.repoId));
+    final readmeAsyncValue =
+        ref.watch(repoReadmeProvider(repo.owner.login, repo.name));
 
     return Scaffold(
       appBar: AppBar(
@@ -77,10 +74,10 @@ class _RepoDetailPageState extends ConsumerState<RepoDetailPage> {
                 ],
                 _labelsRow(repo),
                 const SizedBox(height: 32),
-                repo.readmeText.when(
-                  data: (text) {
+                readmeAsyncValue.when(
+                  data: (repoContent) {
                     return MarkdownBody(
-                      data: text,
+                      data: repoContent.content,
                       // TODO(kuwano): SVGバッジの表示でエラーが出るので一旦表示しない
                       // ref: https://badgen.org/
                       imageBuilder: (uri, title, alt) {

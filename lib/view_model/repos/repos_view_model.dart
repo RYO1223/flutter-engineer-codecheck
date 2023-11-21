@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter_engineer_codecheck/data/app_exception.dart';
 import 'package:flutter_engineer_codecheck/data/model/repo.dart';
 import 'package:flutter_engineer_codecheck/data/repository/github_repository.dart';
@@ -84,46 +83,6 @@ class ReposViewModel extends _$ReposViewModel {
       state = state.copyWith(
         status: ReposViewModelStatus.contentAvailableWithError,
         error: e,
-      );
-    }
-  }
-
-  Future<void> fetchRepoReadme(int repoId) async {
-    final oldRepo = state.repos.firstWhereOrNull((repo) => repo.id == repoId);
-    if (oldRepo == null) {
-      return;
-    }
-
-    try {
-      final result = await _repository.fetchRepoContent(
-        oldRepo.fullName,
-        'README.md',
-      );
-
-      final newRepo = oldRepo.copyWith(
-        readmeText: AsyncData(result.decodedContent()),
-      );
-
-      state = state.copyWith(
-        repos: state.repos.map((repo) {
-          if (repo.id == repoId) {
-            return newRepo;
-          }
-          return repo;
-        }).toList(),
-      );
-    } on AppException catch (e) {
-      final newRepo = oldRepo.copyWith(
-        readmeText: AsyncError(e, StackTrace.current),
-      );
-
-      state = state.copyWith(
-        repos: state.repos.map((repo) {
-          if (repo.id == repoId) {
-            return newRepo;
-          }
-          return repo;
-        }).toList(),
       );
     }
   }

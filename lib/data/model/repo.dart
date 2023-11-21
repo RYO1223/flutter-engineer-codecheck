@@ -1,5 +1,4 @@
 import 'package:flutter_engineer_codecheck/data/model/owner.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'repo.freezed.dart';
@@ -21,9 +20,6 @@ class Repo with _$Repo {
     @JsonKey(name: 'forks_count') required int forksCount,
     @JsonKey(name: 'open_issues_count') required int openIssuesCount,
     @JsonKey(name: 'language') required String? language,
-    @JsonKey(includeFromJson: false, includeToJson: false)
-    @Default(AsyncLoading<String>())
-    AsyncValue<String> readmeText,
   }) = _Repo;
 
   const Repo._();
