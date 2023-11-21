@@ -72,7 +72,7 @@ class _RepoDetailPageState extends ConsumerState<RepoDetailPage> {
                     height: 8,
                   ),
                 ],
-                _labelsRow(repo),
+                _LabelsRow(repo),
                 const SizedBox(height: 32),
                 readmeAsyncValue.when(
                   data: (repoContent) {
@@ -102,29 +102,38 @@ class _RepoDetailPageState extends ConsumerState<RepoDetailPage> {
       ),
     );
   }
+}
 
-  Widget _labelsRow(Repo repo) {
+class _LabelsRow extends StatelessWidget {
+  const _LabelsRow(
+    Repo repo,
+  ) : _repo = repo;
+
+  final Repo _repo;
+
+  @override
+  Widget build(BuildContext context) {
     return Wrap(
       spacing: 8,
       children: [
         RepoLabel(
           type: RepoLabelType.stargazersCount,
-          count: repo.stargazersCount,
+          count: _repo.stargazersCount,
           labelVisible: true,
         ),
         RepoLabel(
           type: RepoLabelType.forksCount,
-          count: repo.forksCount,
+          count: _repo.forksCount,
           labelVisible: true,
         ),
         RepoLabel(
           type: RepoLabelType.watchersCount,
-          count: repo.watchersCount,
+          count: _repo.watchersCount,
           labelVisible: true,
         ),
         RepoLabel(
           type: RepoLabelType.openIssuesCount,
-          count: repo.openIssuesCount,
+          count: _repo.openIssuesCount,
           labelVisible: true,
         ),
       ],
