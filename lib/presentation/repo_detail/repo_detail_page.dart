@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/application/repo_content/repo_content_service.dart';
+import 'package:flutter_engineer_codecheck/application/repos/repos_service.dart';
 import 'package:flutter_engineer_codecheck/domain/entity/repo.dart';
 import 'package:flutter_engineer_codecheck/presentation/component/repo_label.dart';
 import 'package:flutter_engineer_codecheck/presentation/component/repo_language_label.dart';
-import 'package:flutter_engineer_codecheck/application/repo_content/repo_content_service.dart';
-import 'package:flutter_engineer_codecheck/application/repos/repos_service.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
