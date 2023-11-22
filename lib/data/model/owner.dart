@@ -8,6 +8,7 @@ class Owner with _$Owner {
   const factory Owner({
     required int id,
     @JsonKey(name: 'avatar_url') required String avatarUrl,
+    required String login,
   }) = _Owner;
 
   const Owner._();

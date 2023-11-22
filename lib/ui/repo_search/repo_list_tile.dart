@@ -39,15 +39,23 @@ class RepoListTile extends StatelessWidget {
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: _rightColumn(context),
+              child: _RightColumn(_repo),
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  Column _rightColumn(BuildContext context) {
+class _RightColumn extends StatelessWidget {
+  const _RightColumn(
+    Repo repo,
+  ) : _repo = repo;
+  final Repo _repo;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

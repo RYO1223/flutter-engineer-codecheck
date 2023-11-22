@@ -1,4 +1,4 @@
-import 'package:flutter_engineer_codecheck/data/model/fetch_repo_content_result.dart';
+import 'package:flutter_engineer_codecheck/data/model/repo_content.dart';
 import 'package:flutter_engineer_codecheck/data/model/search_repos_result.dart';
 
 abstract class GithubRepository {
@@ -10,8 +10,9 @@ abstract class GithubRepository {
     int? page,
   });
 
-  Future<FetchRepoContentResult> fetchRepoContent(
-    String fullName,
+  Future<RepoContent> fetchRepoContent(
+    String owner,
+    String repo,
     String path,
   );
 }

@@ -2,6 +2,7 @@ import 'package:flutter_engineer_codecheck/data/model/fetch_repo_content_result.
 
 FetchRepoContentResult dummyFetchRepoContentResult =
     const FetchRepoContentResult(
+  path: 'README.md',
   encoding: 'base64',
   name: 'README.md',
   // Raw: hogehogehugahuga

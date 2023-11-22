@@ -1,6 +1,7 @@
 import 'package:flutter_engineer_codecheck/app.dart';
-import 'package:flutter_engineer_codecheck/data/repository/github_repository_impl.dart';
+import 'package:flutter_engineer_codecheck/data/repository/github_repository.dart';
 import 'package:flutter_engineer_codecheck/ui/repo_detail/repo_detail_page.dart';
+import 'package:flutter_engineer_codecheck/view_model/repo_content/repo_content_view_model.dart';
 import 'package:flutter_engineer_codecheck/view_model/repos/repos_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,18 +9,18 @@ import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mocktail_image_network/mocktail_image_network.dart';
 
-import '../../data/dummy/dummy_fetch_repo_content_result.dart';
 import '../../data/dummy/dummy_repo.dart';
+import '../../data/dummy/dummy_repo_content.dart';
 import '../../data/dummy/dummy_search_repos_result.dart';
 
-class MockGithubRepositoryImpl extends Mock implements GithubRepositoryImpl {}
+class MockGithubRepository extends Mock implements GithubRepository {}
 
 void main() {
-  late MockGithubRepositoryImpl repository;
+  late MockGithubRepository repository;
   late List<Device> devices;
 
   setUp(() async {
-    repository = MockGithubRepositoryImpl();
+    repository = MockGithubRepository();
     when(
       () => repository.searchRepos(
         any(),
@@ -34,9 +35,10 @@ void main() {
       () => repository.fetchRepoContent(
         any(),
         any(),
+        any(),
       ),
     ).thenAnswer(
-      (_) => Future.value(dummyFetchRepoContentResult),
+      (_) => Future.value(dummyRepoContent),
     );
 
     devices = [
@@ -61,9 +63,9 @@ void main() {
               ),
             wrapper: (child) => ProviderScope(
               overrides: [
-                repoProvider(1).overrideWith(
-                  (provider) => dummyRepo(1, hasReadmeText: true),
-                ),
+                repoProvider(1).overrideWith((provider) => dummyRepo(1)),
+                repoReadmeProvider('RYO1223', 'flutter_engineer_codecheck')
+                    .overrideWithValue(AsyncData(dummyRepoContent)),
               ],
               child: App(home: child),
             ),

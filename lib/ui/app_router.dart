@@ -23,8 +23,9 @@ class RepoSearchRoute extends GoRouteData {
   const RepoSearchRoute();
 
   @override
-  RepoSearchPage build(BuildContext context, GoRouterState state) =>
-      const RepoSearchPage();
+  RepoSearchPage build(BuildContext context, GoRouterState state) {
+    return const RepoSearchPage();
+  }
 }
 
 class RepoDetailRoute extends GoRouteData {

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'fetch_repo_content_result.dart';
+part of 'repo_content.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,38 +14,35 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-FetchRepoContentResult _$FetchRepoContentResultFromJson(
-    Map<String, dynamic> json) {
-  return _FetchRepoContentResult.fromJson(json);
+RepoContent _$RepoContentFromJson(Map<String, dynamic> json) {
+  return _RepoContent.fromJson(json);
 }
 
 /// @nodoc
-mixin _$FetchRepoContentResult {
+mixin _$RepoContent {
   String get path => throw _privateConstructorUsedError;
-  String get encoding => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $FetchRepoContentResultCopyWith<FetchRepoContentResult> get copyWith =>
+  $RepoContentCopyWith<RepoContent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FetchRepoContentResultCopyWith<$Res> {
-  factory $FetchRepoContentResultCopyWith(FetchRepoContentResult value,
-          $Res Function(FetchRepoContentResult) then) =
-      _$FetchRepoContentResultCopyWithImpl<$Res, FetchRepoContentResult>;
+abstract class $RepoContentCopyWith<$Res> {
+  factory $RepoContentCopyWith(
+          RepoContent value, $Res Function(RepoContent) then) =
+      _$RepoContentCopyWithImpl<$Res, RepoContent>;
   @useResult
-  $Res call({String path, String encoding, String name, String content});
+  $Res call({String path, String name, String content});
 }
 
 /// @nodoc
-class _$FetchRepoContentResultCopyWithImpl<$Res,
-        $Val extends FetchRepoContentResult>
-    implements $FetchRepoContentResultCopyWith<$Res> {
-  _$FetchRepoContentResultCopyWithImpl(this._value, this._then);
+class _$RepoContentCopyWithImpl<$Res, $Val extends RepoContent>
+    implements $RepoContentCopyWith<$Res> {
+  _$RepoContentCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -56,7 +53,6 @@ class _$FetchRepoContentResultCopyWithImpl<$Res,
   @override
   $Res call({
     Object? path = null,
-    Object? encoding = null,
     Object? name = null,
     Object? content = null,
   }) {
@@ -64,10 +60,6 @@ class _$FetchRepoContentResultCopyWithImpl<$Res,
       path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
-              as String,
-      encoding: null == encoding
-          ? _value.encoding
-          : encoding // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -82,43 +74,35 @@ class _$FetchRepoContentResultCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$FetchRepoContentResultImplCopyWith<$Res>
-    implements $FetchRepoContentResultCopyWith<$Res> {
-  factory _$$FetchRepoContentResultImplCopyWith(
-          _$FetchRepoContentResultImpl value,
-          $Res Function(_$FetchRepoContentResultImpl) then) =
-      __$$FetchRepoContentResultImplCopyWithImpl<$Res>;
+abstract class _$$RepoContentImplCopyWith<$Res>
+    implements $RepoContentCopyWith<$Res> {
+  factory _$$RepoContentImplCopyWith(
+          _$RepoContentImpl value, $Res Function(_$RepoContentImpl) then) =
+      __$$RepoContentImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String path, String encoding, String name, String content});
+  $Res call({String path, String name, String content});
 }
 
 /// @nodoc
-class __$$FetchRepoContentResultImplCopyWithImpl<$Res>
-    extends _$FetchRepoContentResultCopyWithImpl<$Res,
-        _$FetchRepoContentResultImpl>
-    implements _$$FetchRepoContentResultImplCopyWith<$Res> {
-  __$$FetchRepoContentResultImplCopyWithImpl(
-      _$FetchRepoContentResultImpl _value,
-      $Res Function(_$FetchRepoContentResultImpl) _then)
+class __$$RepoContentImplCopyWithImpl<$Res>
+    extends _$RepoContentCopyWithImpl<$Res, _$RepoContentImpl>
+    implements _$$RepoContentImplCopyWith<$Res> {
+  __$$RepoContentImplCopyWithImpl(
+      _$RepoContentImpl _value, $Res Function(_$RepoContentImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? path = null,
-    Object? encoding = null,
     Object? name = null,
     Object? content = null,
   }) {
-    return _then(_$FetchRepoContentResultImpl(
+    return _then(_$RepoContentImpl(
       path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
-              as String,
-      encoding: null == encoding
-          ? _value.encoding
-          : encoding // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
@@ -134,21 +118,16 @@ class __$$FetchRepoContentResultImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FetchRepoContentResultImpl extends _FetchRepoContentResult {
-  const _$FetchRepoContentResultImpl(
-      {required this.path,
-      required this.encoding,
-      required this.name,
-      required this.content})
+class _$RepoContentImpl extends _RepoContent {
+  const _$RepoContentImpl(
+      {required this.path, required this.name, required this.content})
       : super._();
 
-  factory _$FetchRepoContentResultImpl.fromJson(Map<String, dynamic> json) =>
-      _$$FetchRepoContentResultImplFromJson(json);
+  factory _$RepoContentImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RepoContentImplFromJson(json);
 
   @override
   final String path;
-  @override
-  final String encoding;
   @override
   final String name;
   @override
@@ -156,61 +135,55 @@ class _$FetchRepoContentResultImpl extends _FetchRepoContentResult {
 
   @override
   String toString() {
-    return 'FetchRepoContentResult(path: $path, encoding: $encoding, name: $name, content: $content)';
+    return 'RepoContent(path: $path, name: $name, content: $content)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FetchRepoContentResultImpl &&
+            other is _$RepoContentImpl &&
             (identical(other.path, path) || other.path == path) &&
-            (identical(other.encoding, encoding) ||
-                other.encoding == encoding) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.content, content) || other.content == content));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, path, encoding, name, content);
+  int get hashCode => Object.hash(runtimeType, path, name, content);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$FetchRepoContentResultImplCopyWith<_$FetchRepoContentResultImpl>
-      get copyWith => __$$FetchRepoContentResultImplCopyWithImpl<
-          _$FetchRepoContentResultImpl>(this, _$identity);
+  _$$RepoContentImplCopyWith<_$RepoContentImpl> get copyWith =>
+      __$$RepoContentImplCopyWithImpl<_$RepoContentImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$FetchRepoContentResultImplToJson(
+    return _$$RepoContentImplToJson(
       this,
     );
   }
 }
 
-abstract class _FetchRepoContentResult extends FetchRepoContentResult {
-  const factory _FetchRepoContentResult(
+abstract class _RepoContent extends RepoContent {
+  const factory _RepoContent(
       {required final String path,
-      required final String encoding,
       required final String name,
-      required final String content}) = _$FetchRepoContentResultImpl;
-  const _FetchRepoContentResult._() : super._();
+      required final String content}) = _$RepoContentImpl;
+  const _RepoContent._() : super._();
 
-  factory _FetchRepoContentResult.fromJson(Map<String, dynamic> json) =
-      _$FetchRepoContentResultImpl.fromJson;
+  factory _RepoContent.fromJson(Map<String, dynamic> json) =
+      _$RepoContentImpl.fromJson;
 
   @override
   String get path;
-  @override
-  String get encoding;
   @override
   String get name;
   @override
   String get content;
   @override
   @JsonKey(ignore: true)
-  _$$FetchRepoContentResultImplCopyWith<_$FetchRepoContentResultImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$RepoContentImplCopyWith<_$RepoContentImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
