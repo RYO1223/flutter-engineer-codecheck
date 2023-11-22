@@ -157,18 +157,7 @@ class _BodyList extends StatelessWidget {
       itemBuilder: (context, index) {
         // listの一番下にロード中やエラーの表示用のwidgetを表示する
         if (index == _repos.length) {
-          return switch (_reposServiceStatus) {
-            ReposServiceStatus.contentAvailableWithError => Center(
-                child: Text(L10n.of(context)!.errorOccurred),
-              ),
-            ReposServiceStatus.loadingAdditionalContent => const Center(
-                child: CircularProgressIndicator(),
-              ),
-            ReposServiceStatus.allContentLoaded => Center(
-                child: Text(L10n.of(context)!.noMoreReposFound),
-              ),
-            _ => const SizedBox(),
-          };
+          return _LastListTile(_reposServiceStatus);
         }
         return RepoListTile(repo: _repos[index]);
       },
@@ -177,5 +166,46 @@ class _BodyList extends StatelessWidget {
       },
       itemCount: _repos.length + 1, // +1はロードやエラーの表示用
     );
+  }
+}
+
+class _LastListTile extends StatelessWidget {
+  const _LastListTile(
+    this._reposServiceStatus,
+  );
+
+  final ReposServiceStatus _reposServiceStatus;
+
+  @override
+  Widget build(BuildContext context) {
+    switch (_reposServiceStatus) {
+      case ReposServiceStatus.contentAvailableWithError:
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: Center(
+            child: Text(L10n.of(context)!.errorOccurred),
+          ),
+        );
+      case ReposServiceStatus.loadingAdditionalContent:
+        return const Padding(
+          padding: EdgeInsets.all(16),
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      case ReposServiceStatus.allContentLoaded:
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: Center(
+            child: Text(L10n.of(context)!.noMoreReposFound),
+          ),
+        );
+      case ReposServiceStatus.uninitialized:
+      case ReposServiceStatus.loading:
+      case ReposServiceStatus.error:
+      case ReposServiceStatus.empty:
+      case ReposServiceStatus.contentAvailable:
+        return const SizedBox(height: 32);
+    }
   }
 }
