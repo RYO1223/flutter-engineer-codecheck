@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/ui/app_router.dart';
-import 'package:flutter_engineer_codecheck/ui/theme/app_theme.dart';
+import 'package:flutter_engineer_codecheck/presentation/app_router.dart';
+import 'package:flutter_engineer_codecheck/presentation/theme/app_theme.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
