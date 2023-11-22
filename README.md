@@ -1,7 +1,6 @@
 # Github Repository Search
 
-![ezgif-4-16850e3b19](https://github.com/RYO1223/flutter-engineer-codecheck/assets/70420716/ace86cc2-b36b-4d0e-83c4-d3060a403e6a)
-
+![ezgif-4-6b45a5b309](https://github.com/RYO1223/flutter-engineer-codecheck/assets/70420716/2f30ad7b-ea59-4952-86e1-d1a82dcfc40d)
 
 ## ページ一覧
 
@@ -39,6 +38,8 @@
   - [golden_test]()を使用したゴールデンテスト
 - ルーティング - [go_router]() & [go_router_builder]()
 - CI/CD - Github Actionsでテスト、ビルド、デプロイ対応
+- 横画面対応
+- ローディング中にshimmerを表示
 - iOS/Android/Web対応
 
 ### 対応できていないこと
@@ -47,7 +48,22 @@
 - [様々な環境でのゴールデンテスト](https://github.com/RYO1223/flutter-engineer-codecheck/issues/9)
 - [テストコードの共通化](https://github.com/RYO1223/flutter-engineer-codecheck/issues/2)
 - [アニメーションやリッチな表示](https://github.com/RYO1223/flutter-engineer-codecheck/issues/11)
-- [横画面対応](https://github.com/RYO1223/flutter-engineer-codecheck/issues/12)
+
+## このアプリ特有の命名
+
+### Repo
+
+アーキテクチャのRepositoryと混同するのでGithubのリポジトリのことをRepoと呼びます
+
+## デバッグ方法
+
+1. v3.13.9のFlutter環境を用意する
+2. Githubで[fine-grained personal access tokenを取得する](https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#fine-grained-personal-access-token-1)
+3. `.env.sample`をコピーして`.env`にリネームし、GITHUB_TOKENに入れる。
+4. 起動
+   1. VSCodeの場合はデバッグタブからDebug devを押してください
+   2. それ以外の場合はターミナルから`flutter run --dart-define-from-file=dart_defines/dev.json`を実行してください
+
 
 ## アーキテクチャ詳細
 
@@ -115,6 +131,11 @@
 
 今回のアプリでは使用していないのでわかりません。
 
+## めちゃくちゃ参考にさせていただきました
+
+https://github.com/wasabeef/flutter-architecture-blueprints/tree/main
+
+https://github.com/susatthi/github-search/tree/develop
 
 以下オリジナルのまま
 
