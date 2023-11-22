@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/application/repos/repos_service.dart';
 import 'package:flutter_engineer_codecheck/application/repos/repos_service_state.dart';
+import 'package:flutter_engineer_codecheck/domain/entity/repo.dart';
 import 'package:flutter_engineer_codecheck/presentation/repo_search/repo_list_tile.dart';
 import 'package:flutter_engineer_codecheck/presentation/repo_search/search_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
@@ -62,63 +63,119 @@ class _RepoSearchPageState extends ConsumerState<RepoSearchPage> {
             await reposService.searchRepos(_textEditingController.text);
           },
           child: switch (reposServiceState.status) {
-            ReposServiceStatus.uninitialized => Center(
-                child: Text(
-                  L10n.of(context)!.searchRepos,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ReposServiceStatus.loading => ListView.separated(
-                itemBuilder: (context, index) {
-                  return const RepoListTileShimmer();
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider();
-                },
-                itemCount: 10,
-              ),
-            ReposServiceStatus.error => Center(
-                child: Text(L10n.of(context)!.errorOccurred),
-              ),
-            ReposServiceStatus.empty => Center(
-                child: Text(
-                  L10n.of(context)!.noReposFound,
-                  textAlign: TextAlign.center,
-                ),
-              ),
+            ReposServiceStatus.uninitialized => const _BodyUninitialized(),
+            ReposServiceStatus.loading => const _BodyLoading(),
+            ReposServiceStatus.error => const _BodyError(),
+            ReposServiceStatus.empty => const _BodyEmpty(),
             ReposServiceStatus.contentAvailable ||
             ReposServiceStatus.contentAvailableWithError ||
             ReposServiceStatus.loadingAdditionalContent ||
             ReposServiceStatus.allContentLoaded =>
-              ListView.separated(
-                controller: _scrollController,
-                itemBuilder: (context, index) {
-                  // listの一番下にロード中やエラーの表示用のwidgetを表示する
-                  if (index == repos.length) {
-                    return switch (reposServiceStatus) {
-                      ReposServiceStatus.contentAvailableWithError => Center(
-                          child: Text(L10n.of(context)!.errorOccurred),
-                        ),
-                      ReposServiceStatus.loadingAdditionalContent =>
-                        const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ReposServiceStatus.allContentLoaded => Center(
-                          child: Text(L10n.of(context)!.noMoreReposFound),
-                        ),
-                      _ => const SizedBox(),
-                    };
-                  }
-                  return RepoListTile(repo: repos[index]);
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider();
-                },
-                itemCount: repos.length + 1, // +1はロードやエラーの表示用
+              _BodyList(
+                _scrollController,
+                repos,
+                reposServiceStatus,
               ),
           },
         ),
       ),
+    );
+  }
+}
+
+class _BodyUninitialized extends ConsumerWidget {
+  const _BodyUninitialized();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Center(
+      child: Text(
+        L10n.of(context)!.searchRepos,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
+
+class _BodyLoading extends StatelessWidget {
+  const _BodyLoading();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemBuilder: (context, index) {
+        return const RepoListTileShimmer();
+      },
+      separatorBuilder: (context, index) {
+        return const Divider();
+      },
+      itemCount: 10,
+    );
+  }
+}
+
+class _BodyError extends ConsumerWidget {
+  const _BodyError();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Center(
+      child: Text(L10n.of(context)!.errorOccurred),
+    );
+  }
+}
+
+class _BodyEmpty extends StatelessWidget {
+  const _BodyEmpty();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        L10n.of(context)!.noReposFound,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
+
+class _BodyList extends StatelessWidget {
+  const _BodyList(
+    this._scrollController,
+    this._repos,
+    this._reposServiceStatus,
+  );
+
+  final ScrollController _scrollController;
+  final List<Repo> _repos;
+  final ReposServiceStatus _reposServiceStatus;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      controller: _scrollController,
+      itemBuilder: (context, index) {
+        // listの一番下にロード中やエラーの表示用のwidgetを表示する
+        if (index == _repos.length) {
+          return switch (_reposServiceStatus) {
+            ReposServiceStatus.contentAvailableWithError => Center(
+                child: Text(L10n.of(context)!.errorOccurred),
+              ),
+            ReposServiceStatus.loadingAdditionalContent => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ReposServiceStatus.allContentLoaded => Center(
+                child: Text(L10n.of(context)!.noMoreReposFound),
+              ),
+            _ => const SizedBox(),
+          };
+        }
+        return RepoListTile(repo: _repos[index]);
+      },
+      separatorBuilder: (context, index) {
+        return const Divider();
+      },
+      itemCount: _repos.length + 1, // +1はロードやエラーの表示用
     );
   }
 }
