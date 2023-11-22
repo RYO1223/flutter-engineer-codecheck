@@ -23,7 +23,7 @@
 ## 技術スタック
 
 - Git ブランチモデル - [git-flow](https://nvie.com/posts/a-successful-git-branching-model/)
-- アーキテクチャ - [flutter-architecture-blueprints](https://github.com/wasabeef/flutter-architecture-blueprints)
+- アーキテクチャ - Clean Architectureを元に少しアレンジ
 - リンター
   - デフォルトの[flutter_lints](https://pub.dev/packages/flutter_lints)をさらに厳しめにした[pedantic_mono](https://pub.dev/packages/pedantic_mono)を導入してます。
   - 追加で[custom_lint](https://pub.dev/packages/custom_lint)を導入して[riverpod_lint](https://pub.dev/packages/riverpod_lint)を追加してます。
@@ -53,7 +53,10 @@
 
 ### Repo
 
-アーキテクチャのRepositoryと混同するのでGithubのリポジトリのことをRepoと呼びます
+こちらは、gitのRepositoryのことを指します。
+アーキテクチャのRepositoryと混同するのでRepoと呼びます。
+
+また、Github APIの返り値のjsonに含まれるRepositoryとは明確に区別します。アプリ内のRepoとはgitのRepositoryの概念そのものを指します。
 
 ## デバッグ方法
 
@@ -67,75 +70,104 @@
 
 ## アーキテクチャ詳細
 
+元のflutter-architecture-blueprintからの変更点は[こちら](https://github.com/RYO1223/flutter-engineer-codecheck/pull/36)
+
 こちらには私の見解が含まれています。間違ったことを言っていれば指摘してください😄
 
-基本的に`flutter-architecture-blueprints`をそのまま使用しています。
+Clean Architectureを参考に、依存する方向を意識しています。
+大枠として、domain, application, infrastructure, presentationで分けています。
 
 ### フォルダ構成
 
-```lib/
-├── data/
-│   ├── model/
-│   │   └── [model_name].dart
-│   ├── remote/
-│   │   ├── base_dio.dart
-│   │   ├── [remote_name]_dio.dart
-│   │   └── [remote_name]_data_source.dart
-│   └── repository/
-│       ├── [repository_name]_repository.dart
-│       └── [repository_name]_repository_impl.dart
-├── ui/
+```
+lib/
+├── domain/
+│   └── entity/
+│       └── [entity_name].dart
+├── application/
+│   ├── [service_name]/
+│   │   ├── [service_name]_service.dart
+│   │   └── [service_name]_service_state.dart
+│   └── [repository_name]_repository.dart
+├── infrastructure/
+│   ├── repository/
+│   │   └── [repository_name]_repository_impl.dart
+│   └── remote/
+│       ├── base_dio.dart
+│       └── [data_source_name]/
+│           ├── [data_source_name]_dio.dart
+│           ├── [datasource_name]_data_source.dart
+│           └── dto/
+│               └── [dto_name].dart
+├── presentation/
 │   ├── component/
-│   ├── theme/
-│   │   └── app_theme.dart
 │   └── [page_name]/
 │       └── [page_name]_page.dart
-├── view_model/
-│   └── [VM_name]/
-│       ├── [VM_name]_view_model.dart
-│       └── [VM_name]_view_model_state.dart
 ├── app.dart
 └── main.dart
 ```
 
-### View層のルール
+### Domainのルール
+
+アプリ内で最も重要なEntityを定義します
+domainから別のレイヤーに依存してはいけません
+
+### Entity
+
+- アプリ内で使用するモデルを定義します
+- json変換機能をつけないでください
+
+### Applicationのルール
+
+アプリ内でのビジネスルールをここにおきます。
+domainには依存していいですが、他の層には依存しないでください
+
+### Service
+
+- RiverpodのProviderで作成してください
+- ステートが複雑な場合は同じフォルダに`[service_name]_service_state.dart`を作成してください。ステートはfreezedで作成してください
+- リポジトリを使用する場合はapplication内にあるリポジトリのインターフェイスをDIしてください
+- 各関数はデータを直接返さないようにしてください。必ずstateを更新して、Notifierを通してPageをリビルドさせてください。
+
+### Repository
+
+- application層で抽象クラスを作成して、infrastructure層で具象クラスを作成してください
+- 関数名、返り値はinfrastructure層に依存しないようにしてください
+
+### Infrastructureのルール
+
+こちらはアプリ内外を繋ぐ役目です。
+
+### Repository Implementation
+
+- Application層で定義したRepositoryを実装します。
+- アプリ外のオブジェクトをアプリ内のオブジェクトに変換する役目があります。
+- RemoteやLocalのデータソースを呼び出します。
+
+### Remote
+
+- 外部APIをここに書きます。
+- Retrofitを使用して、jsonをDTO(Data Transfer Object)に変換します。
+- DTOは同じファイル内のdtoの下に置いてください。@freezedアノテーションをつけてjson変換機能をつけてください。Entityには置かないでください
+
+### Presentationのルール
+
+各ページやコンポーネントをここに置きます。
+
+### Page
 
 - 各ページは`ConsumerWidget`か`ConsumerStatefulWidget`を継承します
-- 各ページのbuild()の一番上に依存しているViewModelを書きます。基本的にページ以下のコンポーネントからViewModelに依存しないでください。（ページ毎にリビルドされるが、パフォーマンスに問題がある場合はコンポーネントから呼び出して良いものとする）
-- ページからコンポーネントに引数を渡す場合はなるべく最小限にしてください。関数はページで定義してください。
-- 他のページに遷移する場合も引数は最小限にしてください（例えば、インスタンスを直接渡すのではなくidのみ渡すようにして、遷移先でviewModelからインスタンスを取得する）
+- 各ページのbuild()の一番上に依存しているServiceを書きます。基本的にページ以下のコンポーネントからServiceに依存しないでください。（ページ毎にリビルドされるが、パフォーマンスに問題がある場合はコンポーネントから呼び出して良いものとする）
+- 他のページに遷移する場合は引数は最小限にしてください（例えば、インスタンスを直接渡すのではなくidのみ渡すようにして、遷移先でServiceからインスタンスを取得する）
 - 特定のページでしか使用しないコンポーネントはページフォルダに作っても良い
-
-### ViewModelのルール
-
-- RiverpodのNotiferで作成してください
-- ステートが複雑な場合は同じフォルダに`[VM_name]_view_model_state.dart`を作成してください。ステートはfreezedで作成してください
-- リポジトリを使用する場合はリポジトリのインターフェイスに依存してください
-- 各関数はデータを直接返さないようにしてください。必ずstateを更新して、Notifierを通してViewをリビルドさせてください。
-
-### Repositoryのルール
-
-- 必ずインターフェイスと実装を分けてください。こうするとテスト時にモックを作成しやすくなります。
-- Repositoryはアプリ内外を繋ぐ役目があります。関数名はアプリ内での表記にしてください。remoteやlocalのデータソースの呼び出しはアプリ外の表記にしてください。
-  - 例えばアプリ内では`Repo`と呼んでいるが、アプリ外では`Repository`と呼んでいるのでRepositoryで変換する
-  - アプリ内ではオブジェクトは`Model`として扱われるが、アプリ外では`json`でデータを持っているので変換する
-
-### Remoteのルール
-
-- それぞれのRemote毎にBaseDioを拡張した[Remote]Dioを作成してください。
-- RESTAPIの場合はRetrofitを使用して自動生成してください
-- 関数名などはアプリ外の表記をそのまま使用してください。アプリ内外の名前の変換はRepositoryで行います。
-- Retrofitはモデル変換まで自動で行いますが、モデル変換はRepositoryの責務なので、[RetrofitObject](https://github.com/RYO1223/flutter-engineer-codecheck/blob/develop/lib/data/remote/retrofit_object.dart)を使用してjsonをそのまま保持するようにしてください。
-
-### Localのルール
-
-今回のアプリでは使用していないのでわかりません。
 
 ## めちゃくちゃ参考にさせていただきました
 
 https://github.com/wasabeef/flutter-architecture-blueprints/tree/main
 
 https://github.com/susatthi/github-search/tree/develop
+
+https://gist.github.com/mpppk/609d592f25cab9312654b39f1b357c60
 
 以下オリジナルのまま
 
