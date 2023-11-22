@@ -141,6 +141,7 @@ domainには依存していいですが、他の層には依存しないでく�
 ### Repository Implementation
 
 - Application層で定義したRepositoryを実装します。
+- Application層とRemoteに依存します。依存関係グラフの最下層になります。
 - アプリ外のオブジェクトをアプリ内のオブジェクトに変換する役目があります。
 - RemoteやLocalのデータソースを呼び出します。
 
