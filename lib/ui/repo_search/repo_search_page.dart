@@ -52,80 +52,72 @@ class _RepoSearchPageState extends ConsumerState<RepoSearchPage> {
         preferredSize: const Size.fromHeight(70),
         child: SearchAppBar(
           textEditingController: _textEditingController,
-          onChanged: (text) {
-            // 256文字以上はエラーが返ってくるので、入力できないようにする
-            // これはGithubAPIに依存しているので、Repositoryで制御するべき??
-            if (text.length >= 256) {
-              _textEditingController.text = text.substring(0, 255);
-            }
-          },
-          onSubmitted: (text) {
-            // 0文字では検索できない
-            if (text.isEmpty) {
-              return;
-            }
-            reposViewModel.searchRepos(text);
-          },
+          onSubmitted: reposViewModel.searchRepos,
         ),
       ),
       body: SafeArea(
         bottom: false,
-        child: switch (reposViewModelState.status) {
-          ReposViewModelStatus.uninitialized => Center(
-              child: Text(
-                L10n.of(context)!.searchRepos,
-                textAlign: TextAlign.center,
+        child: RefreshIndicator(
+          onRefresh: () async {
+            await reposViewModel.searchRepos(_textEditingController.text);
+          },
+          child: switch (reposViewModelState.status) {
+            ReposViewModelStatus.uninitialized => Center(
+                child: Text(
+                  L10n.of(context)!.searchRepos,
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-          ReposViewModelStatus.loading => ListView.separated(
-              itemBuilder: (context, index) {
-                return const RepoListTileShimmer();
-              },
-              separatorBuilder: (context, index) {
-                return const Divider();
-              },
-              itemCount: 10,
-            ),
-          ReposViewModelStatus.error => Center(
-              child: Text(L10n.of(context)!.errorOccurred),
-            ),
-          ReposViewModelStatus.empty => Center(
-              child: Text(
-                L10n.of(context)!.noReposFound,
-                textAlign: TextAlign.center,
+            ReposViewModelStatus.loading => ListView.separated(
+                itemBuilder: (context, index) {
+                  return const RepoListTileShimmer();
+                },
+                separatorBuilder: (context, index) {
+                  return const Divider();
+                },
+                itemCount: 10,
               ),
-            ),
-          ReposViewModelStatus.contentAvailable ||
-          ReposViewModelStatus.contentAvailableWithError ||
-          ReposViewModelStatus.loadingAdditionalContent ||
-          ReposViewModelStatus.allContentLoaded =>
-            ListView.separated(
-              controller: _scrollController,
-              itemBuilder: (context, index) {
-                // listの一番下にロード中やエラーの表示用のwidgetを表示する
-                if (index == repos.length) {
-                  return switch (reposViewModelStatus) {
-                    ReposViewModelStatus.contentAvailableWithError => Center(
-                        child: Text(L10n.of(context)!.errorOccurred),
-                      ),
-                    ReposViewModelStatus.loadingAdditionalContent =>
-                      const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ReposViewModelStatus.allContentLoaded => Center(
-                        child: Text(L10n.of(context)!.noMoreReposFound),
-                      ),
-                    _ => const SizedBox(),
-                  };
-                }
-                return RepoListTile(repo: repos[index]);
-              },
-              separatorBuilder: (context, index) {
-                return const Divider();
-              },
-              itemCount: repos.length + 1, // +1はロードやエラーの表示用
-            ),
-        },
+            ReposViewModelStatus.error => Center(
+                child: Text(L10n.of(context)!.errorOccurred),
+              ),
+            ReposViewModelStatus.empty => Center(
+                child: Text(
+                  L10n.of(context)!.noReposFound,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ReposViewModelStatus.contentAvailable ||
+            ReposViewModelStatus.contentAvailableWithError ||
+            ReposViewModelStatus.loadingAdditionalContent ||
+            ReposViewModelStatus.allContentLoaded =>
+              ListView.separated(
+                controller: _scrollController,
+                itemBuilder: (context, index) {
+                  // listの一番下にロード中やエラーの表示用のwidgetを表示する
+                  if (index == repos.length) {
+                    return switch (reposViewModelStatus) {
+                      ReposViewModelStatus.contentAvailableWithError => Center(
+                          child: Text(L10n.of(context)!.errorOccurred),
+                        ),
+                      ReposViewModelStatus.loadingAdditionalContent =>
+                        const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ReposViewModelStatus.allContentLoaded => Center(
+                          child: Text(L10n.of(context)!.noMoreReposFound),
+                        ),
+                      _ => const SizedBox(),
+                    };
+                  }
+                  return RepoListTile(repo: repos[index]);
+                },
+                separatorBuilder: (context, index) {
+                  return const Divider();
+                },
+                itemCount: repos.length + 1, // +1はロードやエラーの表示用
+              ),
+          },
+        ),
       ),
     );
   }

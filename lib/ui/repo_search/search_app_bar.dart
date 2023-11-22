@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SearchAppBar extends StatelessWidget {
+  /// 0文字の場合はonSubmittedを実行しない
+  ///
+  /// 256文字以上は入力できない
   const SearchAppBar({
     super.key,
     required TextEditingController textEditingController,
-    required void Function(String)? onChanged,
-    required void Function(String)? onSubmitted,
+    void Function(String)? onChanged,
+    void Function(String)? onSubmitted,
   })  : _textEditingController = textEditingController,
         _onChanged = onChanged,
         _onSubmitted = onSubmitted;
@@ -31,8 +34,27 @@ class SearchAppBar extends StatelessWidget {
             onPressed: _textEditingController.clear,
           ),
         ],
-        onChanged: _onChanged,
-        onSubmitted: _onSubmitted,
+        onChanged: (text) {
+          // 256文字以上はエラーが返ってくるので、入力できないようにする
+          // これはGithubAPIに依存しているので、Repositoryで制御するべき??
+          if (text.length >= 256) {
+            _textEditingController.text = text.substring(0, 255);
+          }
+          if (_onChanged == null) {
+            return;
+          }
+          _onChanged!(text);
+        },
+        onSubmitted: (text) {
+          // 0文字では検索できない
+          if (text.isEmpty) {
+            return;
+          }
+          if (_onSubmitted == null) {
+            return;
+          }
+          _onSubmitted!(text);
+        },
       ),
     );
   }

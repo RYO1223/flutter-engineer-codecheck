@@ -152,7 +152,7 @@ class _RepoProviderElement extends AutoDisposeProviderElement<Repo>
   int get repoId => (origin as RepoProvider).repoId;
 }
 
-String _$reposViewModelHash() => r'89d6c95d9457e755ad206caa83a0745cea0379f2';
+String _$reposViewModelHash() => r'aab8292fc3fc234cde5b7fad77735c76700593d3';
 
 /// See also [ReposViewModel].
 @ProviderFor(ReposViewModel)
